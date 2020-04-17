@@ -111,6 +111,7 @@ class FaceMasker:
         import face_recognition
 
         face_image_np = face_recognition.load_image_file(self.face_path)
+        img = cv2.imread(self.face_path)
         face_locations = face_recognition.face_locations(face_image_np, model=self.model)
         face_landmarks = face_recognition.face_landmarks(face_image_np, face_locations)
         self._face_img = Image.fromarray(face_image_np)
@@ -143,7 +144,7 @@ class FaceMasker:
                 src_face_num = src_face_num + 1
                 (x, y, w, h) = rect_to_bbox(rect)
                 #print('(x,y,w,h) '+str((x,y,w,h)))
-                detect_face = with_mask_face[y:y + h, x:x + w]
+                detect_face = with_mask_face[y:y+h,x:x+w]
                 src_faces.append(detect_face)
             # Face alignment operation and save
             faces_aligned = face_alignment(src_faces)
@@ -159,15 +160,18 @@ class FaceMasker:
                 left_y = center_y-new_height//2
                 right_x = center_x+mask_right_width
                 right_y = center_y+new_height//2
-                
+
                 #Normalisation
                 left_x = max(0,left_x-x_ori)
                 left_y -= y_ori
                 right_x = min(right_x-x_ori,chin_right_x-x_ori,w-1)
                 right_y = min(h-1,right_y-y_ori)
-                print("Mask coordiantes "+str((left_x,left_y))+str((right_x,right_y)))
+                print("Mask coordinates " + str((left_x, left_y)) + str((right_x, right_y)))
 
-                cv2.imwrite(self.save_path, faces)
+                cv2.rectangle(img, (rect[3], rect[0]), (rect[1],rect[2]), (0, 255, 0), 2)
+                cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
+                cv2.imwrite(self.save_path+str(face_num)+'.jpg',faces)
+            cv2.imwrite(self.save_path+str(face_num+1)+'.jpg',img)
 
             # if self.show:
             #     self._face_img.show()
@@ -266,5 +270,6 @@ if __name__ == '__main__':
             #     os.makedirs(new_root)
             # deal
             imgpath = os.path.join(root, name)
-            save_imgpath = os.path.join(new_root, name)
+            save_imgpath = os.path.join(new_root,'')
+            print('save_imgpath '+str(save_imgpath))
             cli(imgpath,save_imgpath)
