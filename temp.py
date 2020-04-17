@@ -18,8 +18,14 @@ DEFAULT_IMAGE_PATH = os.path.join(IMAGE_DIR, 'default-mask.png')
 BLACK_IMAGE_PATH = os.path.join(IMAGE_DIR, 'black-mask.png')
 BLUE_IMAGE_PATH = os.path.join(IMAGE_DIR, 'blue-mask.png')
 RED_IMAGE_PATH = os.path.join(IMAGE_DIR, 'red-mask.png')
-
-
+center_x=0
+center_y=0
+mask_left_width=0
+mask_right_width=0
+new_height=0
+chin_right_x=0
+x_ori=0
+y_ori=0
 def rect_to_bbox(rect):
     """获得人脸矩形的坐标信息"""
     # print(rect)
@@ -27,11 +33,16 @@ def rect_to_bbox(rect):
     y = rect[0]
     w = rect[1] - x
     h = rect[2] - y
+    print('face_co-ordinates '+str(((rect[3],rect[0]),(rect[1],rect[2]))))
+    global x_ori
+    x_ori = rect[3]
+    global y_ori
+    y_ori = rect[0]
     return (x, y, w, h)
 
 
 def face_alignment(faces):
-    # 预测关键点
+    # Forecast key points
     predictor = dlib.shape_predictor('/media/ayush/Elements/Mask_Recognition/Mask-Dataset/dlib/shape_predictor_68_face_landmarks.dat')
     faces_aligned = []
     for face in faces:
@@ -50,7 +61,7 @@ def face_alignment(faces):
         angle = math.atan2(dy, dx) * 180. / math.pi
         # 计算仿射矩阵
         RotateMatrix = cv2.getRotationMatrix2D(eye_center, angle, scale=1)
-        # 进行仿射变换，即旋转
+        # Perform affine transformation, ie rotation
         RotImg = cv2.warpAffine(face, RotateMatrix, (face.shape[0], face.shape[1]))
         faces_aligned.append(RotImg)
     return faces_aligned
@@ -118,6 +129,8 @@ class FaceMasker:
 
             # mask face
             found_face = True
+            #print('face_image_np ' + str(face_image_np))
+            #print('face_locations ' + str(face_locations))
             self._mask_face(face_landmark)
 
 
@@ -129,6 +142,7 @@ class FaceMasker:
             for (i, rect) in enumerate(face_locations):
                 src_face_num = src_face_num + 1
                 (x, y, w, h) = rect_to_bbox(rect)
+                #print('(x,y,w,h) '+str((x,y,w,h)))
                 detect_face = with_mask_face[y:y + h, x:x + w]
                 src_faces.append(detect_face)
             # Face alignment operation and save
@@ -138,8 +152,23 @@ class FaceMasker:
                 face_num = face_num + 1
                 faces = cv2.cvtColor(faces, cv2.COLOR_RGBA2BGR)
                 size = (int(128), int(128))
-                faces_after_resize = cv2.resize(faces, size, interpolation=cv2.INTER_AREA)
-                cv2.imwrite(self.save_path, faces_after_resize)
+                #faces_after_resize = cv2.resize(faces, size, interpolation=cv2.INTER_AREA)
+
+
+                left_x = center_x-mask_left_width
+                left_y = center_y-new_height//2
+                right_x = center_x+mask_right_width
+                right_y = center_y+new_height//2
+                
+                #Normalisation
+                left_x = max(0,left_x-x_ori)
+                left_y -= y_ori
+                right_x = min(right_x-x_ori,chin_right_x-x_ori,w-1)
+                right_y = min(h-1,right_y-y_ori)
+                print("Mask coordiantes "+str((left_x,left_y))+str((right_x,right_y)))
+
+                cv2.imwrite(self.save_path, faces)
+
             # if self.show:
             #     self._face_img.show()
             # save
@@ -149,6 +178,7 @@ class FaceMasker:
             print('Found no face.'+self.save_path)
 
     def _mask_face(self, face_landmark: dict):
+        global center_x,center_y,mask_left_width,mask_right_width,new_height,chin_right_x
         nose_bridge = face_landmark['nose_bridge']
         nose_point = nose_bridge[len(nose_bridge) * 1 // 4]
         nose_v = np.array(nose_point)
@@ -158,14 +188,15 @@ class FaceMasker:
         chin_bottom_point = chin[chin_len // 2]
         chin_bottom_v = np.array(chin_bottom_point)
         chin_left_point = chin[chin_len // 8]
+        #print('chin_left '+str(chin_left_point))
         chin_right_point = chin[chin_len * 7 // 8]
-
+        #print('chin_right '+str(chin_right_point))
         # split mask and resize
         width = self._mask_img.width
         height = self._mask_img.height
         width_ratio = 1.2
         new_height = int(np.linalg.norm(nose_v - chin_bottom_v))
-
+        #print('new_height '+str(new_height))
         # left
         mask_left_img = self._mask_img.crop((0, 0, width // 2, height))
         mask_left_width = self.get_distance_from_point_to_line(chin_left_point, nose_point, chin_bottom_point)
@@ -179,6 +210,7 @@ class FaceMasker:
         mask_right_img = mask_right_img.resize((mask_right_width, new_height))
 
         # merge mask
+        #print('(mask_left_img.width,mask_right_img.width) '+str((mask_left_img.width,mask_right_img.width)))
         size = (mask_left_img.width + mask_right_img.width, new_height)
         mask_img = Image.new('RGBA', size)
         mask_img.paste(mask_left_img, (0, 0), mask_left_img)
@@ -192,6 +224,7 @@ class FaceMasker:
         center_x = (nose_point[0] + chin_bottom_point[0]) // 2
         center_y = (nose_point[1] + chin_bottom_point[1]) // 2
 
+        #print('(center_x,center_y) '+str((center_x,center_y)))
         offset = mask_img.width // 2 - mask_left_img.width
         radian = angle * np.pi / 180
         box_x = center_x + int(offset * np.cos(radian)) - rotated_mask_img.width // 2
@@ -199,6 +232,12 @@ class FaceMasker:
 
         # add mask
         self._face_img.paste(mask_img, (box_x, box_y), mask_img)
+        #print('(box_x, box_y) '+str((box_x, box_y))+str((mask_img.width,mask_img.height)))
+        #print('mask_img '+str((mask_img.width,mask_img.height)))
+
+        mask_left_width = mask_left_img.width
+        mask_right_width = mask_right_img.width
+        chin_right_x = chin_right_point[0]
 
     def _save(self):
         path_splits = os.path.splitext(self.face_path)
