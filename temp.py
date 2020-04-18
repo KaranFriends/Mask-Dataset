@@ -43,7 +43,7 @@ def rect_to_bbox(rect):
 
 def face_alignment(faces):
     # Forecast key points
-    predictor = dlib.shape_predictor('/media/ayush/Elements/Mask_Recognition/Mask-Dataset/dlib/shape_predictor_68_face_landmarks.dat')
+    predictor = dlib.shape_predictor('dlib/shape_predictor_68_face_landmarks.dat')
     faces_aligned = []
     for face in faces:
         rec = dlib.rectangle(0, 0, face.shape[0], face.shape[1])
@@ -53,15 +53,15 @@ def face_alignment(faces):
         for j in order:
             x = shape.part(j).x
             y = shape.part(j).y
-        # 计算两眼的中心坐标
+
         eye_center = ((shape.part(36).x + shape.part(45).x) * 1. / 2, (shape.part(36).y + shape.part(45).y) * 1. / 2)
         dx = (shape.part(45).x - shape.part(36).x)
         dy = (shape.part(45).y - shape.part(36).y)
-        # 计算角度
+
         angle = math.atan2(dy, dx) * 180. / math.pi
-        # 计算仿射矩阵
+
         RotateMatrix = cv2.getRotationMatrix2D(eye_center, angle, scale=1)
-        # Perform affine transformation, ie rotation
+
         RotImg = cv2.warpAffine(face, RotateMatrix, (face.shape[0], face.shape[1]))
         faces_aligned.append(RotImg)
     return faces_aligned
@@ -261,8 +261,8 @@ class FaceMasker:
 
 
 if __name__ == '__main__':
-    dataset_path = '/media/ayush/Elements/Mask_Recognition/Mask-Dataset/RWMFD_part_2_pro/00000'
-    save_dataset_path = '/media/ayush/Elements/Mask_Recognition/Mask-Dataset'
+    dataset_path = '/media/ayush/Elements/Mask_Recognition/Mask-Dataset/RWMFD_part_2_pro/'
+    save_dataset_path = '/media/ayush/Elements/Mask_Recognition/Mask-Dataset/RWMFD_part_2_pro/'
     for root, dirs, files in os.walk(dataset_path, topdown=False):
         for name in files:
             new_root = root.replace(dataset_path, save_dataset_path)
