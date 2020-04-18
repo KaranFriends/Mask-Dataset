@@ -261,8 +261,8 @@ class FaceMasker:
 
 
 if __name__ == '__main__':
-    dataset_path = '/media/ayush/Elements/Mask_Recognition/Mask-Dataset/RWMFD_part_2_pro/'
-    save_dataset_path = '/media/ayush/Elements/Mask_Recognition/Mask-Dataset/RWMFD_part_2_pro/'
+    dataset_path = 'trainingimages/'
+    save_dataset_path = 'trainingmasks/'
     for root, dirs, files in os.walk(dataset_path, topdown=False):
         for name in files:
             new_root = root.replace(dataset_path, save_dataset_path)
