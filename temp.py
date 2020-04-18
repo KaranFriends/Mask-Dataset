@@ -4,20 +4,18 @@ import sys
 import argparse
 import numpy as np
 import cv2
-
+import random
 import math
 import dlib
 from PIL import Image, ImageFile
-
+import pandas as pd
 __version__ = '0.3.0'
 
 
 IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images')
 # IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images')
-DEFAULT_IMAGE_PATH = os.path.join(IMAGE_DIR, 'default-mask.png')
-BLACK_IMAGE_PATH = os.path.join(IMAGE_DIR, 'black-mask.png')
-BLUE_IMAGE_PATH = os.path.join(IMAGE_DIR, 'blue-mask.png')
-RED_IMAGE_PATH = os.path.join(IMAGE_DIR, 'red-mask.png')
+
+
 center_1=[]
 center_2=[]
 mask_left=[]
@@ -30,6 +28,9 @@ rect_top = []
 rect_bottom = []
 w1 = []
 h1 = []
+length=0
+output = []
+mask_num=[]
 def rect_to_bbox(rect):
     """获得人脸矩形的坐标信息"""
     # print(rect)
@@ -96,7 +97,13 @@ def cli(pic_path = '1.thr_supporting_actors_group_9901_17_0984.jpg',save_pic_pat
     #     mask_path = RED_IMAGE_PATH
     # else:
     #     mask_path = DEFAULT_IMAGE_PATH
-    mask_path = BLUE_IMAGE_PATH
+    mask_path = []
+    for dirs,subdirs,files in os.walk(IMAGE_DIR):
+        for name in files:
+            mask_path.append(IMAGE_DIR+'/'+str(name))
+    length = len(mask_path)
+
+
 
     FaceMasker(pic_path, mask_path, True, 'hog',save_pic_path).mask()
 
@@ -121,7 +128,6 @@ class FaceMasker:
         face_locations = face_recognition.face_locations(face_image_np, model=self.model)
         face_landmarks = face_recognition.face_landmarks(face_image_np, face_locations)
         self._face_img = Image.fromarray(face_image_np)
-        self._mask_img = Image.open(self.mask_path)
 
         found_face = False
         for face_landmark in face_landmarks:
@@ -155,7 +161,9 @@ class FaceMasker:
                 src_faces.append(detect_face)
             # Face alignment operation and save
             faces_aligned = face_alignment(src_faces)
-            face_num = 0
+            file_name = self.face_path.split('/')[-1].split('.jpg')[0]
+            #print('file_name '+file_name)
+            face_num=0
             for faces in faces_aligned:
                 faces = cv2.cvtColor(faces, cv2.COLOR_RGBA2BGR)
                 size = (int(128), int(128))
@@ -177,11 +185,32 @@ class FaceMasker:
 
                 cv2.rectangle(img,rect_top[face_num], rect_bottom[face_num], (0, 255, 0), 2)
                 cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
-                cv2.imwrite(self.save_path+str(face_num)+'.jpg',faces)
+                cv2.imwrite(self.save_path+str(file_name)+'_'+str(face_num)+'.jpg',faces)
+                li = []
+                li.append(left_x)
+                li.append(left_y)
+                li.append(right_x)
+                li.append(right_y)
+                li.append(rect_top[face_num][0])
+                li.append(rect_top[face_num][1])
+                li.append(rect_bottom[face_num][0])
+                li.append(rect_bottom[face_num][1])
+                li.append(mask_num[face_num])
+                output.append(li)
                 face_num = face_num + 1
-
-            cv2.imwrite(self.save_path+str(face_num+1)+'.jpg',img)
-
+            cv2.imwrite(self.save_path+str(file_name)+'_'+str(face_num+1)+'.jpg',img)
+            center_1.clear()
+            center_2.clear()
+            mask_left.clear()
+            mask_right.clear()
+            new_heigh.clear()
+            chin_right.clear()
+            x_ori.clear()
+            y_ori.clear()
+            rect_top.clear()
+            rect_bottom.clear()
+            w1.clear()
+            h1.clear()
             # if self.show:
             #     self._face_img.show()
             # save
@@ -204,6 +233,13 @@ class FaceMasker:
         chin_right_point = chin[chin_len * 7 // 8]
         #print('chin_right '+str(chin_right_point))
         # split mask and resize
+        a = []
+        for i in range(9):
+            a.append(random.choice(self.mask_path))
+        random.shuffle(a)
+        num = a[0]
+        mask_num.append(num)
+        self._mask_img = Image.open(num)
         width = self._mask_img.width
         height = self._mask_img.height
         width_ratio = 1.2
@@ -272,7 +308,9 @@ class FaceMasker:
 
 if __name__ == '__main__':
     dataset_path = 'RWMFD_part_2_pro/00000'
-    save_dataset_path = 'trainingmasks/'
+    save_dataset_path = 'trainingmask/'
+    global face_num
+    face_num=0
     for root, dirs, files in os.walk(dataset_path, topdown=False):
         for name in files:
             new_root = root.replace(dataset_path, save_dataset_path)
@@ -281,5 +319,7 @@ if __name__ == '__main__':
             # deal
             imgpath = os.path.join(root, name)
             save_imgpath = os.path.join(new_root,'')
-            print('save_imgpath '+str(save_imgpath))
+            print('imgpath '+str(imgpath))
             cli(imgpath,save_imgpath)
+    la = pd.DataFrame(output)
+    la.to_csv(save_dataset_path+'tmp.csv',index=False,header=False)

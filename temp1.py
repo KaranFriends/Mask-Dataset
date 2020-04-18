@@ -1,5 +1,6 @@
 import os
 import shutil
+'''
 list = []
 p = '/media/ayush/Elements/Mask_Recognition/Mask-Dataset/mergedfolder'
 i=0
@@ -21,3 +22,7 @@ while True:
     cv2.imshow('',img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+'''
+import random
+for i in range(1,10):
+    print(random.randint(1,10,1))
