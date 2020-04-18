@@ -1,4 +1,4 @@
-'''import os
+import os
 import shutil
 list = []
 p = '/media/ayush/Elements/Mask_Recognition/Mask-Dataset/mergedfolder'

@@ -43,7 +43,7 @@ def rect_to_bbox(rect):
 
 def face_alignment(faces):
     # Forecast key points
-    predictor = dlib.shape_predictor('/media/ayush/Elements/Mask_Recognition/Mask-Dataset/dlib/shape_predictor_68_face_landmarks.dat')
+    predictor = dlib.shape_predictor('dlib/shape_predictor_68_face_landmarks.dat')
     faces_aligned = []
     for face in faces:
         rec = dlib.rectangle(0, 0, face.shape[0], face.shape[1])
@@ -53,21 +53,21 @@ def face_alignment(faces):
         for j in order:
             x = shape.part(j).x
             y = shape.part(j).y
-        # 计算两眼的中心坐标
+
         eye_center = ((shape.part(36).x + shape.part(45).x) * 1. / 2, (shape.part(36).y + shape.part(45).y) * 1. / 2)
         dx = (shape.part(45).x - shape.part(36).x)
         dy = (shape.part(45).y - shape.part(36).y)
-        # 计算角度
+
         angle = math.atan2(dy, dx) * 180. / math.pi
-        # 计算仿射矩阵
+
         RotateMatrix = cv2.getRotationMatrix2D(eye_center, angle, scale=1)
-        # Perform affine transformation, ie rotation
+
         RotImg = cv2.warpAffine(face, RotateMatrix, (face.shape[0], face.shape[1]))
         faces_aligned.append(RotImg)
     return faces_aligned
 
 
-def cli(pic_path = '/media/ayush/Elements/Mask_Recognition/Mask-Dataset/000.jpg',save_pic_path = ''):
+def cli(pic_path = '1.thr_supporting_actors_group_9901_17_0984.jpg',save_pic_path = ''):
     parser = argparse.ArgumentParser(description='Wear a face mask in the given picture.')
     # parser.add_argument('pic_path', default='/Users/wuhao/lab/wear-a-mask/spider/new_lfw/Aaron_Tippin/Aaron_Tippin_0001.jpg',help='Picture path.')
     # parser.add_argument('--show', action='store_true', help='Whether show picture with mask or not.')
@@ -142,6 +142,7 @@ class FaceMasker:
             with_mask_face = np.asarray(self._face_img)
             for (i, rect) in enumerate(face_locations):
                 src_face_num = src_face_num + 1
+## face coordinate for every face in image
                 (x, y, w, h) = rect_to_bbox(rect)
                 #print('(x,y,w,h) '+str((x,y,w,h)))
                 detect_face = with_mask_face[y:y+h,x:x+w]
@@ -166,12 +167,13 @@ class FaceMasker:
                 left_y -= y_ori
                 right_x = min(right_x-x_ori,chin_right_x-x_ori,w-1)
                 right_y = min(h-1,right_y-y_ori)
+# mask coordinate
                 print("Mask coordinates " + str((left_x, left_y)) + str((right_x, right_y)))
 
-                cv2.rectangle(img, (rect[3], rect[0]), (rect[1],rect[2]), (0, 255, 0), 2)
-                cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
-                cv2.imwrite(self.save_path+str(face_num)+'.jpg',faces)
-            cv2.imwrite(self.save_path+str(face_num+1)+'.jpg',img)
+#                cv2.rectangle(img, (rect[3], rect[0]), (rect[1],rect[2]), (0, 255, 0), 2)
+#                cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
+                cv2.imwrite(self.save_path+str(face_num+1)+'.jpg',faces)
+#            cv2.imwrite(self.save_path+str(face_num+1)+'.jpg',img)
 
             # if self.show:
             #     self._face_img.show()
@@ -261,8 +263,8 @@ class FaceMasker:
 
 
 if __name__ == '__main__':
-    dataset_path = '/media/ayush/Elements/Mask_Recognition/Mask-Dataset/RWMFD_part_2_pro/00000'
-    save_dataset_path = '/media/ayush/Elements/Mask_Recognition/Mask-Dataset'
+    dataset_path = 'trainingimages/'
+    save_dataset_path = 'trainingmasks/'
     for root, dirs, files in os.walk(dataset_path, topdown=False):
         for name in files:
             new_root = root.replace(dataset_path, save_dataset_path)

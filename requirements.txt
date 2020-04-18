@@ -1,0 +1,5 @@
+pillow
+opencv
+face_recognition_models
+dlib
+numpy
