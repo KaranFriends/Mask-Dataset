@@ -154,7 +154,7 @@ class FaceMasker:
             with_mask_face = np.asarray(self._face_img)
             for (i, rect) in enumerate(face_locations):
                 src_face_num = src_face_num + 1
-## face coordinate for every face in image
+                ## face coordinate for every face in image
                 (x, y, w, h) = rect_to_bbox(rect)
                 #print('(x,y,w,h) '+str((x,y,w,h)))
                 detect_face = with_mask_face[y:y+h,x:x+w]
@@ -180,22 +180,22 @@ class FaceMasker:
                 left_y -= y_ori[face_num]
                 right_x = min(right_x-x_ori[face_num],chin_right[face_num]-x_ori[face_num],w1[face_num]-1)
                 right_y = min(h1[face_num]-1,right_y-y_ori[face_num])
-# mask coordinate
+                # mask coordinate
                 print("Mask coordinates " + str((left_x, left_y)) + str((right_x, right_y)))
 
                 cv2.rectangle(img,rect_top[face_num], rect_bottom[face_num], (0, 255, 0), 2)
                 cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
                 cv2.imwrite(self.save_path+str(file_name)+'_'+str(face_num)+'.jpg',faces)
                 li = []
-                li.append(left_x)
+                li.append(left_x)	#mask coordinate
                 li.append(left_y)
                 li.append(right_x)
                 li.append(right_y)
-                li.append(rect_top[face_num][0])
-                li.append(rect_top[face_num][1])
+                li.append(rect_top[face_num][0])	#face coordinate whole image
+                li.append(rect_top[face_num][1])	#face coordinate whole image
                 li.append(rect_bottom[face_num][0])
-                li.append(rect_bottom[face_num][1])
-                li.append(mask_num[face_num])
+                li.append(rect_bottom[face_num][1])	
+                li.append(mask_num[face_num])		#to check randomness 
                 output.append(li)
                 face_num = face_num + 1
             cv2.imwrite(self.save_path+str(file_name)+'_'+str(face_num+1)+'.jpg',img)
