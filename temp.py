@@ -67,7 +67,7 @@ def face_alignment(faces):
     return faces_aligned
 
 
-def cli(pic_path = '/media/ayush/Elements/Mask_Recognition/Mask-Dataset/000.jpg',save_pic_path = ''):
+def cli(pic_path = '1.thr_supporting_actors_group_9901_17_0984.jpg',save_pic_path = ''):
     parser = argparse.ArgumentParser(description='Wear a face mask in the given picture.')
     # parser.add_argument('pic_path', default='/Users/wuhao/lab/wear-a-mask/spider/new_lfw/Aaron_Tippin/Aaron_Tippin_0001.jpg',help='Picture path.')
     # parser.add_argument('--show', action='store_true', help='Whether show picture with mask or not.')
@@ -142,6 +142,7 @@ class FaceMasker:
             with_mask_face = np.asarray(self._face_img)
             for (i, rect) in enumerate(face_locations):
                 src_face_num = src_face_num + 1
+## face coordinate for every face in image
                 (x, y, w, h) = rect_to_bbox(rect)
                 #print('(x,y,w,h) '+str((x,y,w,h)))
                 detect_face = with_mask_face[y:y+h,x:x+w]
@@ -166,12 +167,13 @@ class FaceMasker:
                 left_y -= y_ori
                 right_x = min(right_x-x_ori,chin_right_x-x_ori,w-1)
                 right_y = min(h-1,right_y-y_ori)
+# mask coordinate
                 print("Mask coordinates " + str((left_x, left_y)) + str((right_x, right_y)))
 
-                cv2.rectangle(img, (rect[3], rect[0]), (rect[1],rect[2]), (0, 255, 0), 2)
-                cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
-                cv2.imwrite(self.save_path+str(face_num)+'.jpg',faces)
-            cv2.imwrite(self.save_path+str(face_num+1)+'.jpg',img)
+#                cv2.rectangle(img, (rect[3], rect[0]), (rect[1],rect[2]), (0, 255, 0), 2)
+#                cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
+                cv2.imwrite(self.save_path+str(face_num+1)+'.jpg',faces)
+#            cv2.imwrite(self.save_path+str(face_num+1)+'.jpg',img)
 
             # if self.show:
             #     self._face_img.show()
