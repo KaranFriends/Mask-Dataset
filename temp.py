@@ -170,10 +170,10 @@ class FaceMasker:
 # mask coordinate
                 print("Mask coordinates " + str((left_x, left_y)) + str((right_x, right_y)))
 
-#                cv2.rectangle(img, (rect[3], rect[0]), (rect[1],rect[2]), (0, 255, 0), 2)
-#                cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
-                cv2.imwrite(self.save_path+str(face_num+1)+'.jpg',faces)
-#            cv2.imwrite(self.save_path+str(face_num+1)+'.jpg',img)
+                cv2.rectangle(img, (rect[3], rect[0]), (rect[1],rect[2]), (0, 255, 0), 2)
+                cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
+                cv2.imwrite(self.save_path+str(face_num)+'.jpg',faces)
+            cv2.imwrite(self.save_path+str(face_num+1)+'.jpg',img)
 
             # if self.show:
             #     self._face_img.show()
@@ -263,7 +263,7 @@ class FaceMasker:
 
 
 if __name__ == '__main__':
-    dataset_path = 'trainingimages/'
+    dataset_path = 'RWMFD_part_2_pro/00000'
     save_dataset_path = 'trainingmasks/'
     for root, dirs, files in os.walk(dataset_path, topdown=False):
         for name in files:
