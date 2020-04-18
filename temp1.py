@@ -12,11 +12,13 @@ for subdir, dirs, files in os.walk('/media/ayush/Elements/Mask_Recognition/Mask-
         i+=1
 print(len(list))
 '''
+'''
 import cv2
 img = cv2.imread('/media/ayush/Elements/Mask_Recognition/Mask-Dataset/RWMFD_part_2_pro/00000/test.jpg')
-cv2.rectangle(img, (66,36),(155,126), (0, 255, 0), 2)
+cv2.rectangle(img, (145,26),(235,116), (0, 255, 0), 2)
 #cv2.rectangle(img, (171,587),(439,854), (0, 255, 0), 2)
 while True:
     cv2.imshow('',img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+'''
