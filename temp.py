@@ -18,14 +18,18 @@ DEFAULT_IMAGE_PATH = os.path.join(IMAGE_DIR, 'default-mask.png')
 BLACK_IMAGE_PATH = os.path.join(IMAGE_DIR, 'black-mask.png')
 BLUE_IMAGE_PATH = os.path.join(IMAGE_DIR, 'blue-mask.png')
 RED_IMAGE_PATH = os.path.join(IMAGE_DIR, 'red-mask.png')
-center_x=0
-center_y=0
-mask_left_width=0
-mask_right_width=0
-new_height=0
-chin_right_x=0
-x_ori=0
-y_ori=0
+center_1=[]
+center_2=[]
+mask_left=[]
+mask_right=[]
+new_heigh=[]
+chin_right=[]
+x_ori=[]
+y_ori=[]
+rect_top = []
+rect_bottom = []
+w1 = []
+h1 = []
 def rect_to_bbox(rect):
     """获得人脸矩形的坐标信息"""
     # print(rect)
@@ -34,10 +38,12 @@ def rect_to_bbox(rect):
     w = rect[1] - x
     h = rect[2] - y
     print('face_co-ordinates '+str(((rect[3],rect[0]),(rect[1],rect[2]))))
-    global x_ori
-    x_ori = rect[3]
-    global y_ori
-    y_ori = rect[0]
+    x_ori.append(rect[3])
+    y_ori.append(rect[0])
+    w1.append(w)
+    h1.append(h)
+    rect_top.append((rect[3],rect[0]))
+    rect_bottom.append((rect[1],rect[2]))
     return (x, y, w, h)
 
 
@@ -151,28 +157,29 @@ class FaceMasker:
             faces_aligned = face_alignment(src_faces)
             face_num = 0
             for faces in faces_aligned:
-                face_num = face_num + 1
                 faces = cv2.cvtColor(faces, cv2.COLOR_RGBA2BGR)
                 size = (int(128), int(128))
                 #faces_after_resize = cv2.resize(faces, size, interpolation=cv2.INTER_AREA)
 
 
-                left_x = center_x-mask_left_width
-                left_y = center_y-new_height//2
-                right_x = center_x+mask_right_width
-                right_y = center_y+new_height//2
+                left_x = center_1[face_num]-mask_left[face_num]
+                left_y = center_2[face_num]-new_heigh[face_num]//2
+                right_x = center_1[face_num]+mask_right[face_num]
+                right_y = center_2[face_num]+new_heigh[face_num]//2
 
                 #Normalisation
-                left_x = max(0,left_x-x_ori)
-                left_y -= y_ori
-                right_x = min(right_x-x_ori,chin_right_x-x_ori,w-1)
-                right_y = min(h-1,right_y-y_ori)
+                left_x = max(0,left_x-x_ori[face_num])
+                left_y -= y_ori[face_num]
+                right_x = min(right_x-x_ori[face_num],chin_right[face_num]-x_ori[face_num],w1[face_num]-1)
+                right_y = min(h1[face_num]-1,right_y-y_ori[face_num])
 # mask coordinate
                 print("Mask coordinates " + str((left_x, left_y)) + str((right_x, right_y)))
 
-                cv2.rectangle(img, (rect[3], rect[0]), (rect[1],rect[2]), (0, 255, 0), 2)
+                cv2.rectangle(img,rect_top[face_num], rect_bottom[face_num], (0, 255, 0), 2)
                 cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
                 cv2.imwrite(self.save_path+str(face_num)+'.jpg',faces)
+                face_num = face_num + 1
+
             cv2.imwrite(self.save_path+str(face_num+1)+'.jpg',img)
 
             # if self.show:
@@ -184,7 +191,6 @@ class FaceMasker:
             print('Found no face.'+self.save_path)
 
     def _mask_face(self, face_landmark: dict):
-        global center_x,center_y,mask_left_width,mask_right_width,new_height,chin_right_x
         nose_bridge = face_landmark['nose_bridge']
         nose_point = nose_bridge[len(nose_bridge) * 1 // 4]
         nose_v = np.array(nose_point)
@@ -241,10 +247,12 @@ class FaceMasker:
         #print('(box_x, box_y) '+str((box_x, box_y))+str((mask_img.width,mask_img.height)))
         #print('mask_img '+str((mask_img.width,mask_img.height)))
 
-        mask_left_width = mask_left_img.width
-        mask_right_width = mask_right_img.width
-        chin_right_x = chin_right_point[0]
-
+        mask_left.append(mask_left_img.width)
+        mask_right.append(mask_right_img.width)
+        chin_right.append(chin_right_point[0])
+        center_1.append(center_x)
+        center_2.append(center_y)
+        new_heigh.append(new_height)
     def _save(self):
         path_splits = os.path.splitext(self.face_path)
         new_face_path = path_splits[0] + '-with-mask' + path_splits[1]
