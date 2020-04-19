@@ -365,5 +365,5 @@ if __name__ == '__main__':
             save_imgpath = os.path.join(new_root,'')
             print('imgpath '+str(imgpath))
             cli(imgpath,save_imgpath)
-    la = pd.DataFrame(output)
-    la.to_csv(save_dataset_path+'tmp.csv',index=False,header=False)
+#    la = pd.DataFrame(output)
+#    la.to_csv(save_dataset_path+'tmp.csv',index=False,header=False)

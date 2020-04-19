@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/100_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>683</width>
+    <height>1024</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>285</xmin>
+      <ymin>86</ymin>
+      <xmax>374</xmax>
+      <ymax>176</ymax>
+    </bndbox>
+  </object>
+</annotation>
