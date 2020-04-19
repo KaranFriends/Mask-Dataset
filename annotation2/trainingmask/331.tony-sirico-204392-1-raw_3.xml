@@ -1,0 +1,34 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/331.tony-sirico-204392-1-raw_3.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>798</width>
+    <height>1200</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>204</xmin>
+      <ymin>247</ymin>
+      <xmax>589</xmax>
+      <ymax>632</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>297</xmin>
+      <ymin>846</ymin>
+      <xmax>333</xmax>
+      <ymax>882</ymax>
+    </bndbox>
+  </object>
+</annotation>

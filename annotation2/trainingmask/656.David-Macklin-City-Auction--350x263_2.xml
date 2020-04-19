@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/656.David-Macklin-City-Auction--350x263_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>350</width>
+    <height>263</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>81</xmin>
+      <ymin>67</ymin>
+      <xmax>210</xmax>
+      <ymax>196</ymax>
+    </bndbox>
+  </object>
+</annotation>

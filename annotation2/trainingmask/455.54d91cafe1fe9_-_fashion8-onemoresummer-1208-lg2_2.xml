@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/455.54d91cafe1fe9_-_fashion8-onemoresummer-1208-lg2_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>240</width>
+    <height>312</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>116</xmin>
+      <ymin>56</ymin>
+      <xmax>205</xmax>
+      <ymax>146</ymax>
+    </bndbox>
+  </object>
+</annotation>

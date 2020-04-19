@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/243.actors-politicians-reagan-1-raw_0.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>223</width>
+    <height>223</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>good</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>0</xmin>
+      <ymin>0</ymin>
+      <xmax>223</xmax>
+      <ymax>223</ymax>
+    </bndbox>
+  </object>
+</annotation>

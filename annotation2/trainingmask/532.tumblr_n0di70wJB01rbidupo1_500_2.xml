@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/532.tumblr_n0di70wJB01rbidupo1_500_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>485</width>
+    <height>323</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>135</xmin>
+      <ymin>53</ymin>
+      <xmax>197</xmax>
+      <ymax>115</ymax>
+    </bndbox>
+  </object>
+</annotation>

@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/340.DBooth_GQ_6sep11_pa_b_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>405</width>
+    <height>607</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>145</xmin>
+      <ymin>56</ymin>
+      <xmax>235</xmax>
+      <ymax>146</ymax>
+    </bndbox>
+  </object>
+</annotation>

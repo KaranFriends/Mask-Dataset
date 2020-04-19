@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/448.500px-Andrew_J_West_Disney_ABC_Television_Group_6wdlaheOld4x_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>500</width>
+    <height>717</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>117</xmin>
+      <ymin>217</ymin>
+      <xmax>340</xmax>
+      <ymax>440</ymax>
+    </bndbox>
+  </object>
+</annotation>

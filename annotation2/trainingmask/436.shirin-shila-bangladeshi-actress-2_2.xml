@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/436.shirin-shila-bangladeshi-actress-2_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>690</width>
+    <height>1204</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>221</xmin>
+      <ymin>160</ymin>
+      <xmax>407</xmax>
+      <ymax>345</ymax>
+    </bndbox>
+  </object>
+</annotation>

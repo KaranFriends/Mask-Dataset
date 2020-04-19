@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/529.636150646904999488-NASBrd-06-26-2016-Tennessean-1-E005--2016-06-23-IMG-nashville2-1-1-I3EPKK3F-L833881179-IMG-nashville2-1-1-I3EPKK3F_0.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>268</width>
+    <height>268</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>good</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>0</xmin>
+      <ymin>0</ymin>
+      <xmax>268</xmax>
+      <ymax>268</ymax>
+    </bndbox>
+  </object>
+</annotation>

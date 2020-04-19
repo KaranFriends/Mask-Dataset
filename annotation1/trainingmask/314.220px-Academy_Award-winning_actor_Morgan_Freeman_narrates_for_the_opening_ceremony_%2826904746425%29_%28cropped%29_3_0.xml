@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/314.220px-Academy_Award-winning_actor_Morgan_Freeman_narrates_for_the_opening_ceremony_%2826904746425%29_%28cropped%29_3_0.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>155</width>
+    <height>150</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>good</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>0</xmin>
+      <ymin>0</ymin>
+      <xmax>150</xmax>
+      <ymax>155</ymax>
+    </bndbox>
+  </object>
+</annotation>

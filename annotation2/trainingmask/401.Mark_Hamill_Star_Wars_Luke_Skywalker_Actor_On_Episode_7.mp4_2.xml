@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/401.Mark_Hamill_Star_Wars_Luke_Skywalker_Actor_On_Episode_7.mp4_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>480</width>
+    <height>360</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>167</xmin>
+      <ymin>110</ymin>
+      <xmax>296</xmax>
+      <ymax>239</ymax>
+    </bndbox>
+  </object>
+</annotation>

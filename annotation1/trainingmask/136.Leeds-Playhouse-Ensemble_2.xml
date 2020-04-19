@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/136.Leeds-Playhouse-Ensemble_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>555</width>
+    <height>555</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>good</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>0</xmin>
+      <ymin>0</ymin>
+      <xmax>555</xmax>
+      <ymax>555</ymax>
+    </bndbox>
+  </object>
+</annotation>

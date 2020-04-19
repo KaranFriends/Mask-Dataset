@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/645.3EF5190300000578-4382146-Group_shot_From_left_actor_Matt_Whelan_Barbi_Benton_joined_Chief-a-75_1491629396927_3.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>63</width>
+    <height>62</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>good</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>0</xmin>
+      <ymin>0</ymin>
+      <xmax>62</xmax>
+      <ymax>63</ymax>
+    </bndbox>
+  </object>
+</annotation>

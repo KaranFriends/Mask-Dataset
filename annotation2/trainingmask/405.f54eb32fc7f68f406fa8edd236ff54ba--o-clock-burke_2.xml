@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/405.f54eb32fc7f68f406fa8edd236ff54ba--o-clock-burke_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>220</width>
+    <height>301</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>72</xmin>
+      <ymin>95</ymin>
+      <xmax>124</xmax>
+      <ymax>147</ymax>
+    </bndbox>
+  </object>
+</annotation>

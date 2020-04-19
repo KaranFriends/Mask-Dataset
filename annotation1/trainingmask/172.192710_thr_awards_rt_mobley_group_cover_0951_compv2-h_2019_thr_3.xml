@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/172.192710_thr_awards_rt_mobley_group_cover_0951_compv2-h_2019_thr_3.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>89</width>
+    <height>90</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>good</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>0</xmin>
+      <ymin>0</ymin>
+      <xmax>90</xmax>
+      <ymax>89</ymax>
+    </bndbox>
+  </object>
+</annotation>

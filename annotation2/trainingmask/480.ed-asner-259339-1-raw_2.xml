@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/480.ed-asner-259339-1-raw_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>872</width>
+    <height>1200</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>194</xmin>
+      <ymin>297</ymin>
+      <xmax>656</xmax>
+      <ymax>759</ymax>
+    </bndbox>
+  </object>
+</annotation>

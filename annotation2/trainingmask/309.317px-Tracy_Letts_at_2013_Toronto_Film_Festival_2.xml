@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/309.317px-Tracy_Letts_at_2013_Toronto_Film_Festival_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>317</width>
+    <height>517</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>43</xmin>
+      <ymin>118</ymin>
+      <xmax>266</xmax>
+      <ymax>341</ymax>
+    </bndbox>
+  </object>
+</annotation>

@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/720.Doug+Savant+Disney+ABC+Television+Group+Summer+0xohhVi3F1sl_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>406</width>
+    <height>594</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>97</xmin>
+      <ymin>139</ymin>
+      <xmax>283</xmax>
+      <ymax>325</ymax>
+    </bndbox>
+  </object>
+</annotation>

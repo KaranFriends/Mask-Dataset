@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/264.parkhyungsik.png_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>719</width>
+    <height>507</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>296</xmin>
+      <ymin>125</ymin>
+      <xmax>425</xmax>
+      <ymax>254</ymax>
+    </bndbox>
+  </object>
+</annotation>

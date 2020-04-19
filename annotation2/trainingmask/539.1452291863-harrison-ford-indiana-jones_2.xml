@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/539.1452291863-harrison-ford-indiana-jones_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>594</width>
+    <height>391</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>199</xmin>
+      <ymin>32</ymin>
+      <xmax>306</xmax>
+      <ymax>140</ymax>
+    </bndbox>
+  </object>
+</annotation>

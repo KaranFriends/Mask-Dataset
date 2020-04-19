@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/729.simon-bird-actor-z_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>433</width>
+    <height>650</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>82</xmin>
+      <ymin>171</ymin>
+      <xmax>349</xmax>
+      <ymax>439</ymax>
+    </bndbox>
+  </object>
+</annotation>

@@ -1,0 +1,22 @@
+<annotation>
+  <folder>trainingmask</folder>
+  <filename>trainingmask/620.Willem_Dafoe_at_Lisbon_Film_Festival_2017_%28cropped_%26_retouched%29_2.jpg</filename>
+  <segmented>0</segmented>
+  <size>
+    <width>1003</width>
+    <height>1504</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>bad</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>132</xmin>
+      <ymin>354</ymin>
+      <xmax>798</xmax>
+      <ymax>1020</ymax>
+    </bndbox>
+  </object>
+</annotation>
