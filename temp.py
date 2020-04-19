@@ -222,7 +222,7 @@ class FaceMasker:
                 #cv2.rectangle(img,rect_top[face_num], rect_bottom[face_num], (0, 255, 0), 2)
                 #cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
                 eee = cv2.imwrite(self.save_path+str(file_name)+'_'+str(face_num)+'.jpg',faces)
-                write_xml("trainingmask", self.save_path+str(file_name)+'_'+str(face_num)+'.jpg',[abs(rect_top[face_num][0]-rect_bottom[face_num][0]),abs(rect_top[face_num][1]-rect_bottom[face_num][1]),3],['good'], [(0, 0)],[(abs(rect_top[face_num][0]-rect_bottom[face_num][0]),abs(rect_top[face_num][1]-rect_bottom[face_num][1]))],"annotation1/")
+                write_xml("trainingmask", str(file_name)+'_'+str(face_num)+'.jpg',[abs(rect_top[face_num][0]-rect_bottom[face_num][0]),abs(rect_top[face_num][1]-rect_bottom[face_num][1]),3],['good'], [(0, 0)],[(abs(rect_top[face_num][0]-rect_bottom[face_num][0]),abs(rect_top[face_num][1]-rect_bottom[face_num][1]))],"annotation1/")
                 li = []
                 li.append(left_x)	#mask coordinate
                 li.append(left_y)
@@ -242,7 +242,7 @@ class FaceMasker:
             for i in range(face_num):
                 topl.append((rect_top[i][0],rect_top[i][1]))
                 botr.append((rect_bottom[i][0], rect_bottom[i][1]))
-            write_xml("trainingmask",self.save_path+str(file_name)+'_'+str(face_num+1)+'.jpg',img.shape, unmasked_face, topl, botr, "annotation2/")
+            write_xml("trainingmask",str(file_name)+'_'+str(face_num+1)+'.jpg',img.shape, unmasked_face, topl, botr, "annotation2/")
             center_1.clear()
             center_2.clear()
             mask_left.clear()
