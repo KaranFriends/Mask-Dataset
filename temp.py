@@ -1,4 +1,3 @@
-
 import os
 import sys
 import argparse
@@ -7,6 +6,8 @@ import cv2
 import random
 import math
 import dlib
+from lxml import etree
+import xml.etree.cElementTree as ET
 from PIL import Image, ImageFile
 import pandas as pd
 __version__ = '0.3.0'
@@ -31,6 +32,41 @@ h1 = []
 length=0
 output = []
 mask_num=[]
+
+def write_xml(folder, image_name, image_shape, objects, tl, br, savedir):
+    if not os.path.isdir(savedir):
+        os.mkdir(savedir)
+
+#    image = cv2.imread(img.path)
+    height, width, depth = image_shape
+
+    annotation = ET.Element('annotation')
+    ET.SubElement(annotation, 'folder').text = folder
+    ET.SubElement(annotation, 'filename').text = image_name
+    ET.SubElement(annotation, 'segmented').text = '0'
+    size = ET.SubElement(annotation, 'size')
+    ET.SubElement(size, 'width').text = str(width)
+    ET.SubElement(size, 'height').text = str(height)
+    ET.SubElement(size, 'depth').text = str(depth)
+    for obj, topl, botr in zip(objects, tl, br):
+        ob = ET.SubElement(annotation, 'object')
+        ET.SubElement(ob, 'name').text = obj
+        ET.SubElement(ob, 'pose').text = 'Unspecified'
+        ET.SubElement(ob, 'truncated').text = '0'
+        ET.SubElement(ob, 'difficult').text = '0'
+        bbox = ET.SubElement(ob, 'bndbox')
+        ET.SubElement(bbox, 'xmin').text = str(topl[0])
+        ET.SubElement(bbox, 'ymin').text = str(topl[1])
+        ET.SubElement(bbox, 'xmax').text = str(botr[0])
+        ET.SubElement(bbox, 'ymax').text = str(botr[1])
+
+    xml_str = ET.tostring(annotation)
+    root = etree.fromstring(xml_str)
+    xml_str = etree.tostring(root, pretty_print=True)
+    save_path = os.path.join(savedir, image_name.replace('jpg', 'xml'))
+    with open(save_path, 'wb') as temp_xml:
+        temp_xml.write(xml_str)
+
 def rect_to_bbox(rect):
     """获得人脸矩形的坐标信息"""
     # print(rect)
@@ -183,9 +219,10 @@ class FaceMasker:
                 # mask coordinate
                 print("Mask coordinates " + str((left_x, left_y)) + str((right_x, right_y)))
 
-                cv2.rectangle(img,rect_top[face_num], rect_bottom[face_num], (0, 255, 0), 2)
-                cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
-                cv2.imwrite(self.save_path+str(file_name)+'_'+str(face_num)+'.jpg',faces)
+                #cv2.rectangle(img,rect_top[face_num], rect_bottom[face_num], (0, 255, 0), 2)
+                #cv2.rectangle(faces, (left_x, left_y), (right_x, right_y), (0, 255, 0), 2)
+                eee = cv2.imwrite(self.save_path+str(file_name)+'_'+str(face_num)+'.jpg',faces)
+                write_xml("trainingmask", self.save_path+str(file_name)+'_'+str(face_num)+'.jpg',[abs(rect_top[face_num][0]-rect_bottom[face_num][0]),abs(rect_top[face_num][1]-rect_bottom[face_num][1]),3],['mask'], [(left_x, left_y)],[(right_x, right_y)],"annotation1/")
                 li = []
                 li.append(left_x)	#mask coordinate
                 li.append(left_y)
@@ -199,6 +236,13 @@ class FaceMasker:
                 output.append(li)
                 face_num = face_num + 1
             cv2.imwrite(self.save_path+str(file_name)+'_'+str(face_num+1)+'.jpg',img)
+            unmasked_face = ['unmasked']*face_num
+            topl=[]
+            botr=[]
+            for i in range(face_num):
+                topl.append((rect_top[i][0],rect_top[i][1]))
+                botr.append((rect_bottom[i][0], rect_bottom[i][1]))
+            write_xml("trainingmask",self.save_path+str(file_name)+'_'+str(face_num+1)+'.jpg',img.shape, unmasked_face, topl, botr, "annotation2/")
             center_1.clear()
             center_2.clear()
             mask_left.clear()
@@ -307,7 +351,7 @@ class FaceMasker:
 
 
 if __name__ == '__main__':
-    dataset_path = 'RWMFD_part_2_pro/00000'
+    dataset_path = 'trainingimages/'
     save_dataset_path = 'trainingmask/'
     global face_num
     face_num=0
