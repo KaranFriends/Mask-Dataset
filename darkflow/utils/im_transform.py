@@ -1,5 +1,5 @@
-import numpy as np
 import cv2
+import numpy as np
 
 def imcv2_recolor(im, a = .1):
 	t = [np.random.uniform()]
